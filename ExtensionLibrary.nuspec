@@ -12,9 +12,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Rename method.
-TrimStart → TrimLeft,
-TrimEnd → TrimRight</releaseNotes>
+    <releaseNotes>
+Delete Method.
+・string.IsAny
+Add Method.
+・string.Split
+・string.Slice
+</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
   </metadata>
