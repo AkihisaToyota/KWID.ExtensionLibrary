@@ -11,12 +11,12 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// SqlDataReaderから指定のカラムの値を取得する
         /// </summary>
-        /// <typeparam name="Type"></typeparam>
+        /// <typeparam name="T"></typeparam>
         /// <param name="rdr"></param>
         /// <param name="columnName"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static Type GetColumnValue<Type>(this SqlDataReader rdr, string columnName, Type defaultValue = default(Type))
+        public static T GetColumnValue<T>(this SqlDataReader rdr, string columnName, T defaultValue = default(T))
         {
             object obj = rdr[columnName];
 
@@ -25,7 +25,7 @@ namespace KWID.ExtensionLibrary
                 return defaultValue;
             }
 
-            return (Type)obj;
+            return (T)obj;
         }
 
         /// <summary>
@@ -47,8 +47,11 @@ namespace KWID.ExtensionLibrary
         }
 
         #region String拡張
+
+        #region メソッド呼び出し
+
         /// <summary>
-        /// インスタンスメソッドとしてstring.IsNullOrEmptyを利用できます。
+        /// string.IsNullOrEmpty メソッドと同等。
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
@@ -58,8 +61,7 @@ namespace KWID.ExtensionLibrary
         }
 
         /// <summary>
-        /// .NET4.0で追加されたstring.IsNullOrWhiteSpaceメソッドと同等です。
-        /// また、インスタンスメソッドとしても利用できます。
+        /// string.IsNullOrWhiteSpace メソッドと同等。
         /// </summary>
         /// <param name="self">対象文字列</param>
         /// <returns></returns>
@@ -76,16 +78,29 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <param name="strA">対象文字列A</param>
         /// <param name="strB">対象文字列B</param>
-        /// <returns>一致すれば true</returns>
+        /// <returns>一致すればtrue</returns>
         public static bool EqualsIgnoreCase(this string strA, string strB)
         {
             return string.Compare(strA, strB, true) == 0;
         }
 
         /// <summary>
-        /// 文字列「true, false」をbool型に変換する（大文字小文字問わない）
-        /// また数値の場合は1以上をtrue、0以下をfalseとする
-        /// それ以外はfalseとする
+        /// string.Splitの文字列指定版
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="sepalator"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static string[] Split(this string self, string sepalator, StringSplitOptions options = StringSplitOptions.None)
+        {
+            return self.Split(new string[] { sepalator }, options);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 大文字小文字を問わず、文字列をbool型に変換する。
+        /// 「true」または「1」以上をtrueとする。
         /// </summary>
         /// <returns></returns>
         public static bool ToBool(this string self)
@@ -98,6 +113,8 @@ namespace KWID.ExtensionLibrary
 
             return false;
         }
+
+        #region 文字列操作
 
         /// <summary>
         /// 指定された文字数分、左から取得する。
@@ -136,17 +153,6 @@ namespace KWID.ExtensionLibrary
         }
 
         /// <summary>
-        /// 指定された文字列群のなかに一致するものがあるか。
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="values"></param>
-        /// <returns></returns>
-        public static bool IsAny(this string self, params string[] values)
-        {
-            return values.Any(e => e == self);
-        }
-
-        /// <summary>
         /// 指定した文字が先頭にあるばあい、先頭の指定した文字を削除する。
         /// </summary>
         /// <param name="self"></param>
@@ -177,12 +183,59 @@ namespace KWID.ExtensionLibrary
 
             return self.Substring(0, self.Length - trimStr.Length);
         }
+
+        /// <summary>
+        /// JavaScriptのString.sliceメソッドと同等。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="_startIndex"></param>
+        /// <param name="_endIndex"></param>
+        /// <returns></returns>
+        public static string Slice(this string self, int _startIndex, int? _endIndex = null)
+        {
+            if (self == null) return null;
+
+            // 空文字列はそのまま
+            if (self.IsNullOrEmpty()) return self;
+
+            int start = _startIndex;
+            int end = _endIndex ?? self.Length;
+
+            // マイナス計算
+            start = start < 0 ? self.Length + start : start;
+
+            // マイナス計算
+            end = end < 0 ? self.Length + end : end;
+
+            // endがstartより前なら空文字列
+            if (end < start)
+                return string.Empty;
+
+            // startが最小最大値を超えている場合は対処
+            if (start > self.Length)
+                start = self.Length;
+            else if (start < 0)
+                start = 0;
+
+            // endが最小値最大値を超えている場合は対処
+            if (end > self.Length)
+                end = self.Length;
+            else if (end < 0)
+                end = 0;
+
+            int substrLen = end - start;
+
+            return self.Substring(start, substrLen);
+        }
+
+        #endregion
         #endregion
 
         #region int拡張
 
         /// <summary>
-        /// 1以上はtrue、0以下はfalseとします。
+        /// intをbool型に変換する。
+        /// 1以上をtrueとする。
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
@@ -194,7 +247,7 @@ namespace KWID.ExtensionLibrary
 
         #region DateTime拡張
         /// <summary>
-        /// DateTimeオブジェクトがDateTime.MinValueと等価かを判定します。
+        /// DateTimeオブジェクトがDateTime.MinValueと等価かを判定する。
         /// </summary>
         /// <param name="self">対象DateTimeオブジェクト</param>
         /// <returns></returns>
@@ -246,7 +299,7 @@ namespace KWID.ExtensionLibrary
 
         #region IEnumerable拡張
         /// <summary>
-        /// コレクションが null または要素数が0ならTrueを返し、それ以外はFalseを返す。
+        /// コレクションがnullまたは要素数が0ならtrueを返す。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="self"></param>
@@ -259,7 +312,7 @@ namespace KWID.ExtensionLibrary
 
         #region Type拡張
         /// <summary>
-        /// 指定された Type が System.Collections.Generic.IEnumerable<> を継承するものであれば True を返す。
+        /// 指定されたTypeが System.Collections.Generic.IEnumerable<> を継承するものであれば True を返す。
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
