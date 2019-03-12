@@ -47,10 +47,12 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 ## IEnumerable
 + IsNullOrEmpty()
 	+ return bool
++ StringJoin(string separator)
+	+ return string
 
 ## Type
 + IsGenericEnumerable
 	+ return bool
 
 # License
-[MIT License](/License)
+[MIT License](https://github.com/kawaidainfinity/KWID.ExtensionLibrary/blob/master/LICENSE)

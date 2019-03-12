@@ -308,9 +308,25 @@ namespace KWID.ExtensionLibrary
         {
             return self == null || !self.Any();
         }
+
+        /// <summary>
+        /// string.Joinメソッドと同等。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static string JoinString<T>(this IEnumerable<T> self, string separator)
+        {
+            if (self == null) return null;
+
+            return string.Join(separator, self.Select(e => e.ToString()).ToArray());
+        }
+
         #endregion
 
         #region Type拡張
+
         /// <summary>
         /// 指定されたTypeが System.Collections.Generic.IEnumerable<> を継承するものであれば True を返す。
         /// </summary>
@@ -318,8 +334,11 @@ namespace KWID.ExtensionLibrary
         /// <returns></returns>
         public static bool IsGenericEnumerable(this Type type)
         {
+            if (type == null) return false;
+
             return type.IsGenericType && type.GetInterfaces().Any(t => t == typeof(IEnumerable<>) || t.Name == "IEnumerable");
         }
+
         #endregion
     }
 }
