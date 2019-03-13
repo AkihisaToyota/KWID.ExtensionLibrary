@@ -13,11 +13,8 @@
     <description>$description$</description>
     <summary>$description$</summary>
     <releaseNotes>
-Delete Method.
-・string.IsAny
 Add Method.
-・string.Split
-・string.Slice
+・IEnumerable.StringJoin
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
