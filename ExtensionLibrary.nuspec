@@ -14,7 +14,12 @@
     <summary>$description$</summary>
     <releaseNotes>
 Add Method.
-・IEnumerable.StringJoin
+・string.ToInt
+・IEnumerable.ToHashSet
+Update Method.
+・string.ToBool(convert numeric is default → not to convert numeric is default)
+Others
+・edit method proc.
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 
 namespace KWID.ExtensionLibrary
 {
@@ -98,21 +97,46 @@ namespace KWID.ExtensionLibrary
 
         #endregion
 
+        #region 変換
+
         /// <summary>
         /// 大文字小文字を問わず、文字列をbool型に変換する。
-        /// 「true」または「1」以上をtrueとする。
+        /// 「true」をtrueとする。
+        /// またオプションで「1」以上をtrueとすることも可能。
         /// </summary>
         /// <returns></returns>
-        public static bool ToBool(this string self)
+        public static bool ToBool(this string self, bool isConvertNumber = false)
         {
-            if (self.EqualsIgnoreCase("true"))
-                return true;
+            bool result = self.EqualsIgnoreCase("true");
+
+            if (result)
+                return result;
+
+            // 数値変換しない場合はそのまま結果を返す
+            if (!isConvertNumber)
+                return result;
 
             if (int.TryParse(self, out int num))
                 return num > 0;
 
             return false;
         }
+
+        /// <summary>
+        /// 文字列を数値に変換する。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static int ToInt(this string self, int defaultValue = default(int))
+        {
+            if (int.TryParse(self, out int result))
+                return result;
+
+            return defaultValue;
+        }
+
+        #endregion
 
         #region 文字列操作
 
@@ -126,12 +150,12 @@ namespace KWID.ExtensionLibrary
         {
             if (self == null) return null;
 
-            StringBuilder sb = new StringBuilder();
+            length = Math.Max(length, 0);
 
-            for (int i = 0; i < self.Length && i < length; i++)
-                sb.Append(self[i]);
+            if (self.Length > length)
+                return self.Substring(0, length);
 
-            return sb.ToString();
+            return self;
         }
 
         /// <summary>
@@ -144,12 +168,12 @@ namespace KWID.ExtensionLibrary
         {
             if (self == null) return null;
 
-            StringBuilder sb = new StringBuilder();
+            length = Math.Max(length, 0);
 
-            for (int i = self.Length < length ? 0 : self.Length - length; i < self.Length; i++)
-                sb.Append(self[i]);
+            if (self.Length > length)
+                return self.Substring(self.Length - length, length);
 
-            return sb.ToString();
+            return self;
         }
 
         /// <summary>
@@ -188,18 +212,18 @@ namespace KWID.ExtensionLibrary
         /// JavaScriptのString.sliceメソッドと同等。
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="_startIndex"></param>
-        /// <param name="_endIndex"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
         /// <returns></returns>
-        public static string Slice(this string self, int _startIndex, int? _endIndex = null)
+        public static string Slice(this string self, int startIndex, int? endIndex = null)
         {
             if (self == null) return null;
 
             // 空文字列はそのまま
             if (self.IsNullOrEmpty()) return self;
 
-            int start = _startIndex;
-            int end = _endIndex ?? self.Length;
+            int start = startIndex;
+            int end = endIndex ?? self.Length;
 
             // マイナス計算
             start = start < 0 ? self.Length + start : start;
@@ -212,16 +236,12 @@ namespace KWID.ExtensionLibrary
                 return string.Empty;
 
             // startが最小最大値を超えている場合は対処
-            if (start > self.Length)
-                start = self.Length;
-            else if (start < 0)
-                start = 0;
+            start = Math.Max(start, 0);
+            start = Math.Min(start, self.Length);
 
             // endが最小値最大値を超えている場合は対処
-            if (end > self.Length)
-                end = self.Length;
-            else if (end < 0)
-                end = 0;
+            end = Math.Max(end, 0);
+            end = Math.Min(end, self.Length);
 
             int substrLen = end - start;
 
@@ -321,6 +341,19 @@ namespace KWID.ExtensionLibrary
             if (self == null) return null;
 
             return string.Join(separator, self.Select(e => e.ToString()).ToArray());
+        }
+
+        /// <summary>
+        /// HashSetに変換する。その際、値の重複は削除される。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> self)
+        {
+            if (self == null) return null;
+
+            return new HashSet<T>(self);
         }
 
         #endregion
