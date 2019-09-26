@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Routing;
 
 namespace KWID.ExtensionLibrary
 {
@@ -370,6 +371,21 @@ namespace KWID.ExtensionLibrary
             if (type == null) return false;
 
             return type.IsGenericType && type.GetInterfaces().Any(t => t == typeof(IEnumerable<>) || t.Name == "IEnumerable");
+        }
+
+        #endregion
+
+        #region object拡張
+
+        /// <summary>
+        /// 指定objectのプロパティ群をRouteValueDictionaryとして返す。
+        /// 主に new { } のような単純なものに使用する。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static IDictionary<string, object> ToRouteValueDictionary(this object self)
+        {
+            return new RouteValueDictionary(self);
         }
 
         #endregion

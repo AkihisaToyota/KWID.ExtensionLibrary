@@ -14,12 +14,7 @@
     <summary>$description$</summary>
     <releaseNotes>
 Add Method.
-・string.ToInt
-・IEnumerable.ToHashSet
-Update Method.
-・string.ToBool(convert numeric is default → not to convert numeric is default)
-Others
-・edit method proc.
+・object.ToRouteValueDictionary
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
