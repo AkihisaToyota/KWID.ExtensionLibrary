@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web.Routing;
 
 namespace KWID.ExtensionLibrary
@@ -371,6 +372,31 @@ namespace KWID.ExtensionLibrary
             if (type == null) return false;
 
             return type.IsGenericType && type.GetInterfaces().Any(t => t == typeof(IEnumerable<>) || t.Name == "IEnumerable");
+        }
+
+        #endregion
+
+        #region Exception拡張
+
+        /// <summary>
+        /// 中の例外メッセージを含めて取得する。
+        /// 外側の例外メッセージから表示される。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static string GetMessages(this Exception self)
+        {
+            IEnumerable<string> getAllMessage()
+            {
+                var ex = self;
+                while (ex != null)
+                {
+                    yield return ex.Message;
+                    ex = ex.InnerException;
+                }
+            };
+
+            return getAllMessage().Where(e => !e.IsNullOrWhiteSpace()).JoinString(Environment.NewLine);
         }
 
         #endregion

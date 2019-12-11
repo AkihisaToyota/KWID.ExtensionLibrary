@@ -14,7 +14,7 @@
     <summary>$description$</summary>
     <releaseNotes>
 Add Method.
-・object.ToRouteValueDictionary
+・Exception.GetMessages
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>

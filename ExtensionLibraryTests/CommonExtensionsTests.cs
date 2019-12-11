@@ -203,5 +203,29 @@ namespace KWID.ExtensionLibrary.Tests
             Assert.AreEqual(false, num.ToBool());
         }
         #endregion
+
+        #region Exception.GetMessages
+
+        [TestMethod()]
+        public void GetMessagesTest()
+        {
+            var innerinner = new Exception("不正な文字です。");
+            var inner = new Exception("文字列が処理できません。", innerinner);
+            var outer = new Exception("エラーが発生しました。", inner);
+
+            string kitai = $"エラーが発生しました。{Environment.NewLine}文字列が処理できません。{Environment.NewLine}不正な文字です。";
+
+            Assert.AreEqual(kitai, outer.GetMessages());
+        }
+
+        [TestMethod()]
+        public void GetMessagesTest2()
+        {
+            Exception ex = null;
+
+            Assert.AreEqual("", ex.GetMessages());
+        }
+
+        #endregion
     }
 }
