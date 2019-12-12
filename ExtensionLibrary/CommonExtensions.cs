@@ -13,13 +13,13 @@ namespace KWID.ExtensionLibrary
         /// SqlDataReaderから指定のカラムの値を取得する
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="rdr"></param>
-        /// <param name="columnName"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static T GetColumnValue<T>(this SqlDataReader rdr, string columnName, T defaultValue = default(T))
+        /// <param name="self"></param>
+        /// <param name="columnName">取得カラム名</param>
+        /// <param name="defaultValue">値がNULLのときに代わりにセットする値</param>
+        /// <returns>取得された値</returns>
+        public static T GetColumnValue<T>(this SqlDataReader self, string columnName, T defaultValue = default(T))
         {
-            object obj = rdr[columnName];
+            object obj = self[columnName];
 
             if (DBNull.Value.Equals(obj))
             {
@@ -32,12 +32,12 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// SqlDataReaderから指定のカラムの値を取得する
         /// </summary>
-        /// <param name="rdr"></param>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
-        public static object GetColumnValue(this SqlDataReader rdr, string columnName)
+        /// <param name="self"></param>
+        /// <param name="columnName">取得カラム名</param>
+        /// <returns>取得された値</returns>
+        public static object GetColumnValue(this SqlDataReader self, string columnName)
         {
-            object obj = rdr[columnName];
+            object obj = self[columnName];
 
             if (DBNull.Value.Equals(obj))
             {
@@ -55,7 +55,7 @@ namespace KWID.ExtensionLibrary
         /// string.IsNullOrEmpty メソッドと同等。
         /// </summary>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>Nullか空文字列ならTrue</returns>
         public static bool IsNullOrEmpty(this string self)
         {
             return string.IsNullOrEmpty(self);
@@ -64,8 +64,8 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// string.IsNullOrWhiteSpace メソッドと同等。
         /// </summary>
-        /// <param name="self">対象文字列</param>
-        /// <returns></returns>
+        /// <param name="self"></param>
+        /// <returns>NullかTrimした結果が空文字列ならTrue</returns>
         public static bool IsNullOrWhiteSpace(this string self)
         {
             if (self == null || string.IsNullOrEmpty(self.Trim()))
@@ -75,11 +75,11 @@ namespace KWID.ExtensionLibrary
         }
 
         /// <summary>
-        /// 文字列を string.Compare(strA, strB, true) で比較し、大文字小文字を区別せずに比較する。
+        /// 文字列を string.Compare(strA, strB, True) で比較し、大文字小文字を区別せずに比較する。
         /// </summary>
-        /// <param name="strA">対象文字列A</param>
-        /// <param name="strB">対象文字列B</param>
-        /// <returns>一致すればtrue</returns>
+        /// <param name="strA">検証する文字列</param>
+        /// <param name="strB">比較する文字列</param>
+        /// <returns>一致すればTure</returns>
         public static bool EqualsIgnoreCase(this string strA, string strB)
         {
             return string.Compare(strA, strB, true) == 0;
@@ -89,9 +89,9 @@ namespace KWID.ExtensionLibrary
         /// string.Splitの文字列指定版
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="sepalator"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <param name="sepalator">分割させる起点の文字列</param>
+        /// <param name="options">分割オプション</param>
+        /// <returns>sepalatorの値で分割された文字列配列</returns>
         public static string[] Split(this string self, string sepalator, StringSplitOptions options = StringSplitOptions.None)
         {
             return self.Split(new string[] { sepalator }, options);
@@ -102,35 +102,31 @@ namespace KWID.ExtensionLibrary
         #region 変換
 
         /// <summary>
-        /// 大文字小文字を問わず、文字列をbool型に変換する。
-        /// 「true」をtrueとする。
-        /// またオプションで「1」以上をtrueとすることも可能。
+        /// 文字列 "true" を大文字小文字を問わず、bool型のTrueに変換する。
         /// </summary>
-        /// <returns></returns>
+        /// <param name="self"></param>
+        /// <param name="isConvertNumber">"1" 以上の数値文字列をTrueとするか</param>
+        /// <returns>変換結果</returns>
         public static bool ToBool(this string self, bool isConvertNumber = false)
         {
             bool result = self.EqualsIgnoreCase("true");
 
-            if (result)
-                return result;
+            // 数値変換
+            if (isConvertNumber)
+            {
+                result = self.ToInt(0) >= 1;
+            }
 
-            // 数値変換しない場合はそのまま結果を返す
-            if (!isConvertNumber)
-                return result;
-
-            if (int.TryParse(self, out int num))
-                return num > 0;
-
-            return false;
+            return result;
         }
 
         /// <summary>
         /// 文字列を数値に変換する。
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static int ToInt(this string self, int defaultValue = default(int))
+        /// <param name="defaultValue">変換できなかった場合の数値</param>
+        /// <returns>変換結果</returns>
+        public static int ToInt(this string self, int defaultValue = default)
         {
             if (int.TryParse(self, out int result))
                 return result;
@@ -145,9 +141,9 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// 指定された文字数分、左から取得する。
         /// </summary>
-        /// <param name="self">対象文字列</param>
-        /// <param name="length">文字数。対象文字列の長さを超えていても可</param>
-        /// <returns></returns>
+        /// <param name="self"></param>
+        /// <param name="length">取得文字数。対象文字列を超える文字数はすべて取得される。</param>
+        /// <returns>処理結果文字列</returns>
         public static string Left(this string self, int length)
         {
             if (self == null) return null;
@@ -163,9 +159,9 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// 指定された文字数分、右から取得する。
         /// </summary>
-        /// <param name="self">対象文字列</param>
-        /// <param name="length">文字数。対象文字列の長さを超えていても可</param>
-        /// <returns></returns>
+        /// <param name="self"></param>
+        /// <param name="length">取得文字数。対象文字列を超える文字数はすべて取得される。</param>
+        /// <returns>処理結果文字列</returns>
         public static string Right(this string self, int length)
         {
             if (self == null) return null;
@@ -182,8 +178,8 @@ namespace KWID.ExtensionLibrary
         /// 指定した文字が先頭にある場合、先頭の指定した文字を削除する。
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="trimStr"></param>
-        /// <returns></returns>
+        /// <param name="trimStr">取り除きたい文字列</param>
+        /// <returns>処理結果文字列</returns>
         public static string TrimLeft(this string self, string trimStr)
         {
             if (self == null) return null;
@@ -198,8 +194,8 @@ namespace KWID.ExtensionLibrary
         /// 指定した文字が後方にある場合、後方の指定した文字を削除する。
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="trimStr"></param>
-        /// <returns></returns>
+        /// <param name="trimStr">取り除きたい文字列</param>
+        /// <returns>処理結果文字列</returns>
         public static string TrimRight(this string self, string trimStr)
         {
             if (self == null) return null;
@@ -214,9 +210,9 @@ namespace KWID.ExtensionLibrary
         /// JavaScriptのString.sliceメソッドと同等。
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="startIndex"></param>
-        /// <param name="endIndex"></param>
-        /// <returns></returns>
+        /// <param name="startIndex">開始インデックス</param>
+        /// <param name="endIndex">終了インデックス（このインデックスの文字は含まれない）</param>
+        /// <returns>処理結果文字列</returns>
         public static string Slice(this string self, int startIndex, int? endIndex = null)
         {
             if (self == null) return null;
@@ -256,11 +252,10 @@ namespace KWID.ExtensionLibrary
         #region int拡張
 
         /// <summary>
-        /// intをbool型に変換する。
-        /// 1以上をtrueとする。
+        /// 1以上の数値をbool型のTrueに変換する。
         /// </summary>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>変換結果</returns>
         public static bool ToBool(this int self)
         {
             return self > 0 ? true : false;
@@ -271,8 +266,8 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// DateTimeオブジェクトがDateTime.MinValueと等価かを判定する。
         /// </summary>
-        /// <param name="self">対象DateTimeオブジェクト</param>
-        /// <returns></returns>
+        /// <param name="self"></param>
+        /// <returns>等価ならTrue</returns>
         public static bool IsMinValue(this DateTime self)
         {
             return self == DateTime.MinValue;
@@ -285,7 +280,7 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
-        /// <param name="self">指定 Dictionary</param>
+        /// <param name="self"></param>
         /// <param name="key">指定キー</param>
         /// <returns>指定したキーに対応する値</returns>
         public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
@@ -303,7 +298,7 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
-        /// <param name="self">指定 Dictionary</param>
+        /// <param name="self"></param>
         /// <param name="key">指定キー</param>
         /// <param name="defaultValue">取得できなかった場合のデフォルトの値</param>
         /// <returns>指定したキーに対応する値</returns>
@@ -321,11 +316,11 @@ namespace KWID.ExtensionLibrary
 
         #region IEnumerable拡張
         /// <summary>
-        /// コレクションがnullまたは要素数が0ならtrueを返す。
+        /// コレクションがnullまたは要素数が0ならTrueを返す。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">要素の型</typeparam>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>コレクションがnullまたは要素数0ならTrue</returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> self)
         {
             return self == null || !self.Any();
@@ -334,10 +329,10 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// string.Joinメソッドと同等。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">要素の型</typeparam>
         /// <param name="self"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
+        /// <param name="separator">区切り文字</param>
+        /// <returns>連結結果</returns>
         public static string JoinString<T>(this IEnumerable<T> self, string separator)
         {
             if (self == null) return null;
@@ -348,9 +343,9 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// HashSetに変換する。その際、値の重複は削除される。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">要素の型</typeparam>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>変換結果</returns>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> self)
         {
             if (self == null) return null;
@@ -363,15 +358,15 @@ namespace KWID.ExtensionLibrary
         #region Type拡張
 
         /// <summary>
-        /// 指定されたTypeが System.Collections.Generic.IEnumerable<> を継承するものであれば True を返す。
+        /// 指定されたTypeが System.Collections.Generic.IEnumerable&lt;&gt; を継承するものであれば True を返す。
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool IsGenericEnumerable(this Type type)
+        /// <param name="self"></param>
+        /// <returns>System.Collections.Generic.IEnumerable&lt;&gt; を継承するものであれば True</returns>
+        public static bool IsGenericEnumerable(this Type self)
         {
-            if (type == null) return false;
+            if (self == null) return false;
 
-            return type.IsGenericType && type.GetInterfaces().Any(t => t == typeof(IEnumerable<>) || t.Name == "IEnumerable");
+            return self.IsGenericType && self.GetInterfaces().Any(t => t == typeof(IEnumerable<>) || t.Name == "IEnumerable");
         }
 
         #endregion
@@ -383,7 +378,7 @@ namespace KWID.ExtensionLibrary
         /// 外側の例外メッセージから表示される。
         /// </summary>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>取得結果</returns>
         public static string GetMessages(this Exception self)
         {
             IEnumerable<string> getAllMessage()
@@ -409,7 +404,7 @@ namespace KWID.ExtensionLibrary
         /// new RouetValueDictionary(obj) と同等。
         /// </summary>
         /// <param name="self"></param>
-        /// <returns></returns>
+        /// <returns>変換結果</returns>
         public static IDictionary<string, object> ToRouteValueDictionary(this object self)
         {
             return new RouteValueDictionary(self);

@@ -13,8 +13,7 @@
     <description>$description$</description>
     <summary>$description$</summary>
     <releaseNotes>
-Add Method.
-・Exception.GetMessages
+メソッドのサマリーがなかったので追加
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
