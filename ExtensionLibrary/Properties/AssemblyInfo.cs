@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KWID")]
 [assembly: AssemblyProduct("ExtensionLibrary")]
-[assembly: AssemblyCopyright("Copyright ©  2019 KWID.ExtensionLibrary")]
+[assembly: AssemblyCopyright("Copyright ©  2019- KWID.ExtensionLibrary")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
