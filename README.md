@@ -1,5 +1,5 @@
 # 概要
-Nuget で公開している KWID.ExtensionLibrary のソースです。
+Nuget で公開している [KWID.ExtensionLibrary](https://www.nuget.org/packages/KWID.ExtensionLibrary/) のソースです。
 C# のいろいろなメソッドに拡張メソッドを追加します。
 
 # 拡張クラス
