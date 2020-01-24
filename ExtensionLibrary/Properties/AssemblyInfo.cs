@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("ExtensionLibrary")]
+[assembly: AssemblyTitle("KWID.ExtensionLibrary")]
 [assembly: AssemblyDescription("いろいろな拡張メソッドを追加します。")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KWID")]
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、次を使用してビルド番号とリビジョン番号を既定に設定できます
 // 以下のように '*' を使用します:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.1.0")]
+[assembly: AssemblyVersion("1.7.1.1")]
