@@ -19,35 +19,21 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void ToBoolTest()
         {
-            string str = "TRUE";
-            Assert.AreEqual(true, str.ToBool());
-        }
+            string str;
 
-        [TestMethod()]
-        public void ToBoolTest2()
-        {
-            string str = "true";
+            str = "TRUE";
             Assert.AreEqual(true, str.ToBool());
-        }
 
-        [TestMethod()]
-        public void ToBoolTest3()
-        {
-            string str = "ffffff";
+            str = "true";
+            Assert.AreEqual(true, str.ToBool());
+
+            str = "ffffff";
             Assert.AreEqual(false, str.ToBool());
-        }
 
-        [TestMethod()]
-        public void ToBoolTest4()
-        {
-            string str = "1";
+            str = "1";
             Assert.AreEqual(true, str.ToBool(true));
-        }
 
-        [TestMethod()]
-        public void ToBoolTest5()
-        {
-            string str = "0";
+            str = "0";
             Assert.AreEqual(false, str.ToBool(true));
         }
         #endregion
@@ -56,28 +42,18 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void LeftTest()
         {
-            string str = "abcde";
+            string str;
+
+            str = "abcde";
             Assert.AreEqual("abc", str.Left(3));
-        }
 
-        [TestMethod()]
-        public void LeftTest2()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("abcde", str.Left(6));
-        }
 
-        [TestMethod()]
-        public void LeftTest3()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("", str.Left(0));
-        }
 
-        [TestMethod()]
-        public void LeftTest4()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("", str.Left(-1));
         }
         #endregion
@@ -86,28 +62,18 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void RightTest()
         {
-            string str = "abcde";
+            string str;
+
+            str = "abcde";
             Assert.AreEqual("cde", str.Right(3));
-        }
 
-        [TestMethod()]
-        public void RightTest2()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("abcde", str.Right(6));
-        }
 
-        [TestMethod()]
-        public void RightTest3()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("", str.Right(0));
-        }
 
-        [TestMethod()]
-        public void RightTest4()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("", str.Right(-1));
         }
         #endregion
@@ -116,14 +82,12 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void TrimLeftTest()
         {
-            string str = "abcde";
-            Assert.AreEqual("cde", str.TrimLeft("ab"));
-        }
+            string str;
 
-        [TestMethod()]
-        public void TrimLeftTest2()
-        {
-            string str = "abcde";
+            str = "abcde";
+            Assert.AreEqual("cde", str.TrimLeft("ab"));
+
+            str = "abcde";
             Assert.AreEqual("abcde", str.TrimLeft("ba"));
         }
         #endregion
@@ -132,14 +96,12 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void TrimRightTest()
         {
-            string str = "abcde";
-            Assert.AreEqual("abc", str.TrimRight("de"));
-        }
+            string str;
 
-        [TestMethod()]
-        public void TrimRightTest2()
-        {
-            string str = "abcde";
+            str = "abcde";
+            Assert.AreEqual("abc", str.TrimRight("de"));
+
+            str = "abcde";
             Assert.AreEqual("abcde", str.TrimRight("ed"));
         }
         #endregion
@@ -148,58 +110,39 @@ namespace KWID.ExtensionLibrary.Tests
         [TestMethod()]
         public void SliceTest()
         {
-            string str = "abcde";
+            string str;
+
+            str = "abcde";
             Assert.AreEqual("abcd", str.Slice(0, 4));
-        }
 
-        [TestMethod()]
-        public void SliceTest2()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("cd", str.Slice(-3, -1));
-        }
 
-        [TestMethod()]
-        public void SliceTest3()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("bc", str.Slice(-4, 3));
-        }
 
-        [TestMethod()]
-        public void SliceTest4()
-        {
-            string str = "abcde";
+            str = "abcde";
             Assert.AreEqual("abcde", str.Slice(-999, 1600));
         }
         #endregion
 
         #region int.ToBool
         [TestMethod()]
-        public void IntToBoolTest1()
+        [Description("IntToBoolのテスト")]
+        public void IntToBoolTest()
         {
-            int num = 1;
-            Assert.AreEqual(true, num.ToBool());
-        }
+            int num;
 
-        [TestMethod()]
-        public void IntToBoolTest2()
-        {
-            int num = 0;
+            num = 1;
+            Assert.AreEqual(true, num.ToBool());
+
+            num = 0;
             Assert.AreEqual(false, num.ToBool());
-        }
 
-        [TestMethod()]
-        public void IntToBoolTest3()
-        {
-            int num = 999;
+            num = 999;
             Assert.AreEqual(true, num.ToBool());
-        }
 
-        [TestMethod()]
-        public void IntToBoolTest4()
-        {
-            int num = -999;
+            num = -999;
             Assert.AreEqual(false, num.ToBool());
         }
         #endregion

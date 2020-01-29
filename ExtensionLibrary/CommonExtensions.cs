@@ -263,6 +263,7 @@ namespace KWID.ExtensionLibrary
         #endregion
 
         #region DateTime拡張
+
         /// <summary>
         /// DateTimeオブジェクトがDateTime.MinValueと等価かを判定する。
         /// </summary>
@@ -272,9 +273,11 @@ namespace KWID.ExtensionLibrary
         {
             return self == DateTime.MinValue;
         }
+
         #endregion
 
         #region Dictionary拡張
+
         /// <summary>
         /// Dictionary からキーを指定して値を取得する。
         /// </summary>
@@ -312,9 +315,11 @@ namespace KWID.ExtensionLibrary
 
             return defaultValue;
         }
+
         #endregion
 
         #region IEnumerable拡張
+
         /// <summary>
         /// コレクションがnullまたは要素数が0ならTrueを返す。
         /// </summary>
