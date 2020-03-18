@@ -3,11 +3,6 @@ Nuget で公開している [KWID.ExtensionLibrary](https://www.nuget.org/packag
 C# のいろいろなメソッドに拡張メソッドを追加します。
 
 # 拡張クラス
-## System.Data.SqlClient.SqlDataReader
-+ GetColumnValue<T>(string columnName, T defaultValue = default(T))
-	+ return T
-+ GetColumnValue(string columnName)
-	+ return object
 
 ## string
 + IsNullOrEmpty()
@@ -16,8 +11,12 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 	+ return bool
 + EqualsIgnoreCase(string strB)
 	+ return bool
-+ ToBool()
++ Split(string sepalator, StringSplitOptions options)
+	+ return string[]
++ ToBool(bool isConvertNumeric)
 	+ return bool
++ ToInt(int defaultValue)
+	+ return int
 + Left(int length)
 	+ return string
 + Right(int length)
@@ -27,6 +26,8 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 + TrimRight(string trimStr)
 	+ return string
 + Slice(int startIndex, int endIndex)
+	+ return string
++ AddSeparator(string separator, int separateLength)
 	+ return string
 
 ## int
@@ -44,15 +45,33 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 + GetValueOrDefault<TKey, TValue>(TKey key)
 	+ return TValue
 
-## IEnumerable
+## IEnumerable<T>
 + IsNullOrEmpty()
 	+ return bool
-+ StringJoin(string separator)
++ JoinString(string separator)
+	+ return string
++ ToHashSet()
+	+ return HashSet<T>
++ Chunk(int size)
+	+ return IEnumerable<IEnumerable<T>>
+
+## IEnumerable<char>
++ NewString()
 	+ return string
 
 ## Type
 + IsGenericEnumerable
 	+ return bool
+
+## Exception
++ GetMessages()
+	+ return string
+
+## System.Data.SqlClient.SqlDataReader
++ GetColumnValue<T>(string columnName, T defaultValue = default(T))
+	+ return T
++ GetColumnValue(string columnName)
+	+ return object
 
 # License
 [MIT License](https://github.com/kawaidainfinity/KWID.ExtensionLibrary/blob/master/LICENSE)

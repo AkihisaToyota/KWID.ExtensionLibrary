@@ -88,12 +88,12 @@ namespace KWID.ExtensionLibrary
         /// <summary>
         /// string.Splitのセパレータに文字列を指定できます。
         /// </summary>
-        /// <param name="sepalator">分割させる起点の文字列</param>
+        /// <param name="separator">分割させる起点の文字列</param>
         /// <param name="options">分割オプション</param>
         /// <returns>sepalatorの値で分割された文字列配列</returns>
-        public static string[] Split(this string self, string sepalator, StringSplitOptions options = StringSplitOptions.None)
+        public static string[] Split(this string self, string separator, StringSplitOptions options = StringSplitOptions.None)
         {
-            return self.Split(new string[] { sepalator }, options);
+            return self.Split(new string[] { separator }, options);
         }
 
         #endregion
@@ -322,7 +322,7 @@ namespace KWID.ExtensionLibrary
         #region IEnumerable拡張
 
         /// <summary>
-        /// コレクションがnullまたは要素数が0ならTrueを返す。
+        /// コレクションがnullまたは要素数が0ならTrueを返します。
         /// </summary>
         /// <typeparam name="T">要素の型</typeparam>
         /// <returns>コレクションがnullまたは要素数0ならTrue</returns>
