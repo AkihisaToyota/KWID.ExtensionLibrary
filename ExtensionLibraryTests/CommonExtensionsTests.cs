@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KWID.ExtensionLibrary.Tests
+namespace KWID.ExtensionLibrary.Test
 {
     /// <summary>
     /// 自作処理はここでテストする。
@@ -15,30 +15,28 @@ namespace KWID.ExtensionLibrary.Tests
     [TestClass()]
     public class CommonExtensionsTests
     {
-        #region string.ToBool
+        #region string
         [TestMethod()]
         public void ToBoolTest()
         {
             string str;
 
             str = "TRUE";
-            Assert.AreEqual(true, str.ToBool());
+            Assert.IsTrue(str.ToBool());
 
             str = "true";
-            Assert.AreEqual(true, str.ToBool());
+            Assert.IsTrue(str.ToBool());
 
             str = "ffffff";
-            Assert.AreEqual(false, str.ToBool());
+            Assert.IsFalse(str.ToBool());
 
             str = "1";
-            Assert.AreEqual(true, str.ToBool(true));
+            Assert.IsTrue(str.ToBool(true));
 
             str = "0";
-            Assert.AreEqual(false, str.ToBool(true));
+            Assert.IsFalse(str.ToBool(true));
         }
-        #endregion
 
-        #region string.Left
         [TestMethod()]
         public void LeftTest()
         {
@@ -56,9 +54,7 @@ namespace KWID.ExtensionLibrary.Tests
             str = "abcde";
             Assert.AreEqual("", str.Left(-1));
         }
-        #endregion
 
-        #region string.Right
         [TestMethod()]
         public void RightTest()
         {
@@ -76,9 +72,7 @@ namespace KWID.ExtensionLibrary.Tests
             str = "abcde";
             Assert.AreEqual("", str.Right(-1));
         }
-        #endregion
 
-        #region string.TrimLeft
         [TestMethod()]
         public void TrimLeftTest()
         {
@@ -90,9 +84,7 @@ namespace KWID.ExtensionLibrary.Tests
             str = "abcde";
             Assert.AreEqual("abcde", str.TrimLeft("ba"));
         }
-        #endregion
 
-        #region string.TrimRight
         [TestMethod()]
         public void TrimRightTest()
         {
@@ -104,9 +96,7 @@ namespace KWID.ExtensionLibrary.Tests
             str = "abcde";
             Assert.AreEqual("abcde", str.TrimRight("ed"));
         }
-        #endregion
 
-        #region string.Slice
         [TestMethod()]
         public void SliceTest()
         {
@@ -124,9 +114,34 @@ namespace KWID.ExtensionLibrary.Tests
             str = "abcde";
             Assert.AreEqual("abcde", str.Slice(-999, 1600));
         }
+
+        [TestMethod()]
+        public void AddSeparatorTest()
+        {
+            string str;
+
+            str = "AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHII";
+            Assert.AreEqual("AAAA-BBBB-CCCC-DDDD-EEEE-FFFF-GGGG-HHHH-II", str.AddSeparator("-", 4));
+
+            str = "AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHII";
+            Assert.AreEqual("AAA-ABB-BBC-CCC-DDD-DEE-EEF-FFF-GGG-GHH-HHI-I", str.AddSeparator("-", 3));
+
+            str = "AAAA";
+            Assert.AreEqual("AAAA", str.AddSeparator("-", 5));
+
+            str = "";
+            Assert.AreEqual("", str.AddSeparator("-", 5));
+
+            str = null;
+            Assert.AreEqual(null, str.AddSeparator("-", 5));
+
+            str = "";
+            Assert.AreEqual("", str.AddSeparator(null, -1));
+
+        }
         #endregion
 
-        #region int.ToBool
+        #region int
         [TestMethod()]
         [Description("IntToBoolのテスト")]
         public void IntToBoolTest()
@@ -134,22 +149,23 @@ namespace KWID.ExtensionLibrary.Tests
             int num;
 
             num = 1;
-            Assert.AreEqual(true, num.ToBool());
+            Assert.IsTrue(num.ToBool());
 
             num = 0;
-            Assert.AreEqual(false, num.ToBool());
+            Assert.IsFalse(num.ToBool());
 
             num = 999;
-            Assert.AreEqual(true, num.ToBool());
+            Assert.IsTrue(num.ToBool());
 
             num = -999;
-            Assert.AreEqual(false, num.ToBool());
+            Assert.IsFalse(num.ToBool());
         }
         #endregion
 
-        #region Exception.GetMessages
+        #region Exception
 
         [TestMethod()]
+        [Description("GetMessagesのテスト")]
         public void GetMessagesTest()
         {
             var innerinner = new Exception("不正な文字です。");
@@ -159,14 +175,82 @@ namespace KWID.ExtensionLibrary.Tests
             string kitai = $"エラーが発生しました。{Environment.NewLine}文字列が処理できません。{Environment.NewLine}不正な文字です。";
 
             Assert.AreEqual(kitai, outer.GetMessages());
-        }
 
-        [TestMethod()]
-        public void GetMessagesTest2()
-        {
+
             Exception ex = null;
 
             Assert.AreEqual("", ex.GetMessages());
+        }
+
+        #endregion
+
+        #region IEnumerable
+
+        [TestMethod()]
+        [Description("Chunkのテスト")]
+        public void ChunkTest()
+        {
+
+            List<IEnumerable<char>> result = "hogefugapiyo".Chunk(4).ToList();
+            List<IEnumerable<char>> baseAnswer = new List<IEnumerable<char>>() { "hoge", "fuga", "piyo" };
+
+            Assert.AreEqual(baseAnswer.Count, result.Count);
+            for (int i = 0; i < baseAnswer.Count; i++)
+            {
+                string a = baseAnswer[i].NewString();
+                string r = result[i].NewString();
+                Assert.AreEqual(a, r);
+            }
+
+
+            result = "hogefugapiyofoo".Chunk(4).ToList();
+            baseAnswer = new List<IEnumerable<char>>() { "hoge", "fuga", "piyo", "foo" };
+
+            Assert.AreEqual(baseAnswer.Count, result.Count);
+            for (int i = 0; i < baseAnswer.Count; i++)
+            {
+                string a = baseAnswer[i].NewString();
+                string r = result[i].NewString();
+                Assert.AreEqual(a, r);
+            }
+
+
+            result = "hogefugapiyofoo".Chunk(30).ToList();
+            baseAnswer = new List<IEnumerable<char>>() { "hogefugapiyofoo" };
+
+            Assert.AreEqual(baseAnswer.Count, result.Count);
+            for (int i = 0; i < baseAnswer.Count; i++)
+            {
+                string a = baseAnswer[i].NewString();
+                string r = result[i].NewString();
+                Assert.AreEqual(a, r);
+            }
+        }
+
+        #endregion
+
+        #region Type
+
+        [TestMethod()]
+        [Description("IsGenericEnumerableのテスト")]
+        public void IsGenericEnumerableTest()
+        {
+            object obj = null;
+
+            obj = new List<string>();
+            Assert.IsTrue(obj.GetType().IsGenericEnumerable());
+
+            obj = new HashSet<int>();
+            Assert.IsTrue(obj.GetType().IsGenericEnumerable());
+
+            obj = new Dictionary<string, object>();
+            Assert.IsTrue(obj.GetType().IsGenericEnumerable());
+
+            obj = new System.Collections.Specialized.StringCollection();
+            Assert.IsFalse(obj.GetType().IsGenericEnumerable());
+
+            obj = new object();
+            Assert.IsFalse(obj.GetType().IsGenericEnumerable());
         }
 
         #endregion

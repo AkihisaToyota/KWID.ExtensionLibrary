@@ -7,8 +7,8 @@
     <ProjectGuid>{5C8555F7-7D8A-429A-9FA3-A3CED23D0708}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtensionLibraryTests</RootNamespace>
-    <AssemblyName>ExtensionLibraryTests</AssemblyName>
+    <RootNamespace>KWID.ExtensionLibrary.Test</RootNamespace>
+    <AssemblyName>KWID.ExtensionLibrary.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

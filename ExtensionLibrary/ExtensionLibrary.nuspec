@@ -13,7 +13,12 @@
     <description>$description$</description>
     <summary>$description$</summary>
     <releaseNotes>
-アセンブリ情報変更
+メソッドの追加
+・string.AddSeparator
+・IEnumerable&lt;T&gt;.Chunk
+・IEnumerable&lt;char&gt;.NewString
+メソッドの削除
+・object.ToRouteValueDictionary
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
