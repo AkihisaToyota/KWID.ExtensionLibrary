@@ -98,6 +98,36 @@ namespace KWID.ExtensionLibrary
 
         #endregion
 
+        #region 代入
+
+        /// <summary>
+        /// 文字列が null または空の場合、指定した文字列を返却します。
+        /// 当てはまらない場合は変換せずそのまま返却します。
+        /// </summary>
+        /// <param name="defaultValue">null または空の場合に返却する値</param>
+        /// <returns>変換結果</returns>
+        public static string DefaultIfNullOrEmpty(this string self, string defaultValue)
+        {
+            if (self.IsNullOrEmpty())
+                return defaultValue;
+            return self;
+        }
+
+        /// <summary>
+        /// 文字列が null または空、空白の場合、指定した文字列を返却します。
+        /// 当てはまらない場合は変換せずそのまま返却します。
+        /// </summary>
+        /// <param name="defaultValue">null または空、空白の場合に返却する値</param>
+        /// <returns>変換結果</returns>
+        public static string DefaultIfNullOrWhiteSpace(this string self, string defaultValue)
+        {
+            if (self.IsNullOrWhiteSpace())
+                return defaultValue;
+            return self;
+        }
+
+        #endregion
+
         #region 変換
 
         /// <summary>

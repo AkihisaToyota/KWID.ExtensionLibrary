@@ -29,6 +29,10 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 	+ return string
 + AddSeparator(string separator, int separateLength)
 	+ return string
++ DefaultNullOrEmpty(string defaultValue)
+	+ return string
++ DefaultNullOrWhiteSpace(string defaultValue)
+	+ return string
 
 ## int
 + ToBool()

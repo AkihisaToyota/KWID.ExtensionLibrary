@@ -139,6 +139,52 @@ namespace KWID.ExtensionLibrary.Test
             Assert.AreEqual("", str.AddSeparator(null, -1));
 
         }
+
+        [TestMethod()]
+        public void DefaultIfNullOrEmptyTest()
+        {
+            string str;
+            string emptyStr = "This is Empty!!!";
+
+            str = "ABC";
+            Assert.AreEqual(str, str.DefaultIfNullOrEmpty(emptyStr));
+
+            str = "\t\n";
+            Assert.AreEqual(str, str.DefaultIfNullOrEmpty(emptyStr));
+
+            str = " ";
+            Assert.AreEqual(str, str.DefaultIfNullOrEmpty(emptyStr));
+
+            str = "";
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrEmpty(emptyStr));
+
+            str = null;
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrEmpty(emptyStr));
+
+        }
+
+        [TestMethod()]
+        public void DefaultIfNullOrWhiteSpaceTest()
+        {
+            string str;
+            string emptyStr = "This is Empty!!!";
+
+            str = "ABC";
+            Assert.AreEqual(str, str.DefaultIfNullOrWhiteSpace(emptyStr));
+
+            str = "\t\n";
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrWhiteSpace(emptyStr));
+
+            str = " ";
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrWhiteSpace(emptyStr));
+
+            str = "";
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrWhiteSpace(emptyStr));
+
+            str = null;
+            Assert.AreEqual(emptyStr, str.DefaultIfNullOrWhiteSpace(emptyStr));
+
+        }
         #endregion
 
         #region int
