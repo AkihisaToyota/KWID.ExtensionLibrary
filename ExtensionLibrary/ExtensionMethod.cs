@@ -11,7 +11,7 @@ namespace KWID.ExtensionLibrary
     /// <summary>
     /// 様々な拡張メソッドを追加するクラスです。
     /// </summary>
-    public static class CommonExtensions
+    public static class ExtensionMethod
     {
         /// <summary>
         /// SqlDataReaderから指定のカラムの値を取得します。
@@ -58,9 +58,7 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <returns>Nullか空文字列ならTrue</returns>
         public static bool IsNullOrEmpty(this string self)
-        {
-            return string.IsNullOrEmpty(self);
-        }
+            => string.IsNullOrEmpty(self);
 
         /// <summary>
         /// string.IsNullOrWhiteSpace メソッドと同等です。
@@ -81,9 +79,7 @@ namespace KWID.ExtensionLibrary
         /// <param name="strB">比較する文字列</param>
         /// <returns>一致すればTure</returns>
         public static bool EqualsIgnoreCase(this string strA, string strB)
-        {
-            return string.Compare(strA, strB, true) == 0;
-        }
+            => string.Compare(strA, strB, true) == 0;
 
         /// <summary>
         /// string.Splitのセパレータに文字列を指定できます。
@@ -92,9 +88,7 @@ namespace KWID.ExtensionLibrary
         /// <param name="options">分割オプション</param>
         /// <returns>sepalatorの値で分割された文字列配列</returns>
         public static string[] Split(this string self, string separator, StringSplitOptions options = StringSplitOptions.None)
-        {
-            return self.Split(new string[] { separator }, options);
-        }
+            => self.Split(new string[] { separator }, options);
 
         #endregion
 
@@ -156,6 +150,21 @@ namespace KWID.ExtensionLibrary
         public static int ToInt(this string self, int defaultValue = default)
         {
             if (int.TryParse(self, out int result))
+                return result;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// 文字列を数値に変換します。
+        /// </summary>
+        /// <param name="style">数値書式</param>
+        /// <param name="provider">書式プロバイダ</param>
+        /// <param name="defaultValue">変換できなかった場合の数値</param>
+        /// <returns></returns>
+        public static int ToInt(this string self, System.Globalization.NumberStyles style, IFormatProvider provider, int defaultValue = default)
+        {
+            if (int.TryParse(self, style, provider, out int result))
                 return result;
 
             return defaultValue;
@@ -291,9 +300,7 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <returns>変換結果</returns>
         public static bool ToBool(this int self)
-        {
-            return self > 0 ? true : false;
-        }
+            => self > 0;
         #endregion
 
         #region DateTime拡張
@@ -303,9 +310,7 @@ namespace KWID.ExtensionLibrary
         /// </summary>
         /// <returns>等価ならTrue</returns>
         public static bool IsMinValue(this DateTime self)
-        {
-            return self == DateTime.MinValue;
-        }
+            => self == DateTime.MinValue;
 
         #endregion
 
@@ -321,7 +326,7 @@ namespace KWID.ExtensionLibrary
         public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
         {
             if (self == null)
-                return default(TValue);
+                return default;
 
             self.TryGetValue(key, out TValue result);
             return result;
@@ -357,9 +362,7 @@ namespace KWID.ExtensionLibrary
         /// <typeparam name="T">要素の型</typeparam>
         /// <returns>コレクションがnullまたは要素数0ならTrue</returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> self)
-        {
-            return self == null || !self.Any();
-        }
+            => self == null || !self.Any();
 
         /// <summary>
         /// string.Joinメソッドと同等です。

@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Remoting;
 
 namespace KWID.ExtensionLibrary.Test
 {
     /// <summary>
     /// 自作処理はここでテストする。
-    /// 内部で .NET Framework のメソッドを読んでいるだけのものはテスト外とする。
+    /// 内部で .NET Framework のメソッドを呼んでいるだけのものはテスト外とする。
     /// </summary>
     [TestClass()]
     public class CommonExtensionsTests
