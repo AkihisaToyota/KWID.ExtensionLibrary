@@ -36,9 +36,7 @@ namespace KWID.ExtensionLibrary
         /// <param name="tryAction">try 処理</param>
         /// <param name="catchAction">catch 処理</param>
         /// <param name="finallyAction">finally 処理</param>
-        public static void TryAction<T>(Action tryAction,
-                                        Action<T> catchAction = null,
-                                        Action finallyAction = null)
+        public static void TryAction<T>(Action tryAction, Action<T> catchAction = null, Action finallyAction = null)
             where T : Exception
         {
             try
@@ -61,9 +59,7 @@ namespace KWID.ExtensionLibrary
         /// <param name="tryAction">try 処理</param>
         /// <param name="catchAction">catch 処理</param>
         /// <param name="finallyAction">finally 処理</param>
-        public static void TryAction(Action tryAction,
-                                     Action<Exception> catchAction = null,
-                                     Action finallyAction = null)
+        public static void TryAction(Action tryAction, Action<Exception> catchAction = null, Action finallyAction = null)
         {
             TryAction<Exception>(tryAction, catchAction, finallyAction);
         }

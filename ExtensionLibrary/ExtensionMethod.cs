@@ -13,42 +13,6 @@ namespace KWID.ExtensionLibrary
     /// </summary>
     public static class ExtensionMethod
     {
-        /// <summary>
-        /// SqlDataReaderから指定のカラムの値を取得します。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="columnName">取得カラム名</param>
-        /// <param name="defaultValue">値がNULLのときに代わりにセットする値</param>
-        /// <returns>取得された値</returns>
-        public static T GetColumnValue<T>(this SqlDataReader self, string columnName, T defaultValue = default(T))
-        {
-            object obj = self[columnName];
-
-            if (DBNull.Value.Equals(obj))
-            {
-                return defaultValue;
-            }
-
-            return (T)obj;
-        }
-
-        /// <summary>
-        /// SqlDataReaderから指定のカラムの値を取得します。
-        /// </summary>
-        /// <param name="columnName">取得カラム名</param>
-        /// <returns>取得された値</returns>
-        public static object GetColumnValue(this SqlDataReader self, string columnName)
-        {
-            object obj = self[columnName];
-
-            if (DBNull.Value.Equals(obj))
-            {
-                return null;
-            }
-
-            return obj;
-        }
-
         #region String拡張
 
         #region メソッド呼び出し
@@ -475,6 +439,44 @@ namespace KWID.ExtensionLibrary
         //    return new RouteValueDictionary(self);
         //}
 
+        #endregion
+
+        #region その他
+        /// <summary>
+        /// SqlDataReaderから指定のカラムの値を取得します。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="columnName">取得カラム名</param>
+        /// <param name="defaultValue">値がNULLのときに代わりにセットする値</param>
+        /// <returns>取得された値</returns>
+        public static T GetColumnValue<T>(this SqlDataReader self, string columnName, T defaultValue = default(T))
+        {
+            object obj = self[columnName];
+
+            if (DBNull.Value.Equals(obj))
+            {
+                return defaultValue;
+            }
+
+            return (T)obj;
+        }
+
+        /// <summary>
+        /// SqlDataReaderから指定のカラムの値を取得します。
+        /// </summary>
+        /// <param name="columnName">取得カラム名</param>
+        /// <returns>取得された値</returns>
+        public static object GetColumnValue(this SqlDataReader self, string columnName)
+        {
+            object obj = self[columnName];
+
+            if (DBNull.Value.Equals(obj))
+            {
+                return null;
+            }
+
+            return obj;
+        }
         #endregion
     }
 }
