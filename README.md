@@ -25,15 +25,15 @@ C# のいろいろなメソッドに拡張メソッドを追加します。
 + bool ToBool(this int self)
 ## DateTime
 + bool IsMinValue(this DateTime self)
-## IDictionary<TKey, TValue>
+## IDictionary&lt;TKey, TValue&gt;
 + TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
 + TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, TValue defaultValue)
-## IEnumerable<T>
+## IEnumerable&lt;T&gt;
 + bool IsNullOrEmpty<T>(this IEnumerable<T> self)
 + string JoinString<T>(this IEnumerable<T> self, string separator)
 + HashSet<T> ToHashSet<T>(this IEnumerable<T> self)
 + IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> self, int size)
-## IEnumerable<char>
+## IEnumerable&lt;char&gt;
 + string NewString(this IEnumerable<char> self)
 ## Type
 + bool IsGenericEnumerable(this Type self)
