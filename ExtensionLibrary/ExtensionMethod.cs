@@ -409,7 +409,7 @@ namespace KWID.ExtensionLibrary
         /// 外側の例外メッセージから表示される。
         /// </summary>
         /// <returns>取得結果</returns>
-        public static string GetMessages(this Exception self)
+        public static string GetMessages(this Exception self, string separator = null)
         {
             IEnumerable<string> getAllMessage()
             {
@@ -421,7 +421,7 @@ namespace KWID.ExtensionLibrary
                 }
             };
 
-            return getAllMessage().Where(e => !e.IsNullOrWhiteSpace()).JoinString(Environment.NewLine);
+            return getAllMessage().Where(e => !e.IsNullOrWhiteSpace()).JoinString(separator ?? Environment.NewLine);
         }
 
         #endregion

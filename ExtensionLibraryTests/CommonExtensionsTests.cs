@@ -224,6 +224,9 @@ namespace KWID.ExtensionLibrary.Test
 
             Assert.AreEqual(kitai, outer.GetMessages());
 
+            kitai = $"エラーが発生しました。|文字列が処理できません。|不正な文字です。";
+
+            Assert.AreEqual(kitai, outer.GetMessages("|"));
 
             Exception ex = null;
 

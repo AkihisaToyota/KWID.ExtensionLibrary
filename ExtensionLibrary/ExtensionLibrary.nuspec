@@ -13,16 +13,8 @@
     <description>$description$</description>
     <summary>$description$</summary>
     <releaseNotes>
-クラスの追加
-・CollectionEx（Collection の汎用メソッドクラス）
-・CommonEx（便利そうな汎用メソッドクラス）
-メソッドの追加
-・string.ToInt（引数は int.ParseInt に準拠）
-・CollectionEx.NewArray（new T[] {} と同等）
-・CollectionEx.NewList（new List&lt;T&gt;() {} と同等）
-・CollectionEx.NewHashSet（new HashSet&lt;T&gt;() {} と同等）
-・CommonEx.TryFunc（代入式を try-catch のラムダ式で記述可能）
-・CommonEx.TryAction（try-catch をラムダ式で記述可能）
+引数の追加
+・Exception.GetMessages にセパレータ指定引数を追加
 </releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>extension extensions</tags>
